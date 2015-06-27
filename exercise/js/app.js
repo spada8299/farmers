@@ -87,7 +87,7 @@ var getAllCropCard = function(){
 			$('#seedingTime').text(crop.get("seedingTime"));
 			$('#feature').text(crop.get("feature"));
 			$('#farmerName').text(crop.get("farmerName"));
-			$('#palce').text(crop.get("seedingPosition"));
+			$('#place').text(crop.get("seedingPosition"));
 			$('#sellingTime').text(crop.get("sellingTime"));
 			for(var i=0; i<crop.get("recentDate").length; i++){
 				$('#diary').append('<div class="row diary">\

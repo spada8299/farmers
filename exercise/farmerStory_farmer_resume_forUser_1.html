@@ -7,18 +7,26 @@
     <link rel="stylesheet" type="text/css" href="farmer_story.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
   </head>
   <body　class="container">
+    <script type="text/javascript">
+      $(document).ready(function(){
+        console.log(getValue("id"));
+        getCrop(getValue("id"));
+      });
+    </script>
   	<nav class="navbar navbar-inverse">
   		<div class="container-fluid">
     		<div class="navbar-header">
-    				<a class="navbar-brand" href="farmerStory_user.html"><i class="fa fa-angle-left fa-lg"></i></a>
-    				<p class="navbar-text">生產履歷 - 菜名#1</p>
+    				<a class="navbar-brand" href="index.html"><i class="fa fa-angle-left fa-lg"></i></a>
+    				<p class="navbar-text">生產履歷 - <span id="navCropTitle">菜名#1</span></p>
     		</div>
     		<div>
       		<ul class="nav navbar-nav navbar-right">
-        		<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        		<li><a href="signUp.html"><span class="glyphicon glyphicon-user"></span> 註冊</a></li>
+            <li><a href="logIn.html"><span class="glyphicon glyphicon-log-in"></span> 登入</a></li>
       		</ul>
     		</div>
   		</div>
@@ -26,52 +34,32 @@
 		<section>
 			<div class="col-md-2">
           <div class="tag notOnS">未上市</div>
-          <div class="picBig"><img src=""></div>
+          <div><img src="" class="picBig" id="cropPic"></div>
         </div>
         <div class="col-md-10 resumeInfo">
           <div class="col-md-10">
-            <span class="cropTitle"><b>菜名#1</b></span><span id="bookMarkNum"><i class="fa fa-star"></i> 10人加書籤</span><span id="trackNum"><i class="fa fa-rss"></i> 3人訂閱</span>
+            <span class="cropTitle" id="cropTitle">菜名#1</span><span id="bookMarkNum"><i class="fa fa-star"></i> 0人加書籤</span><span id="trackNum"><i class="fa fa-rss"></i> 0人訂閱</span>
           </div>
           <div class="col-md-2">
             
           </div>
           <div class="col-md-6">
-            <div class="underLine detail"><i class="fa fa-clock-o"></i>　播種時間</div>
-            <div class="underLine detail"><i class="fa fa-certificate"></i>　feature</div>
+            <div class="underLine detail"><i class="fa fa-clock-o"></i>　<span id="seedingTime">播種時間</span></div>
+            <div class="underLine detail"><i class="fa fa-certificate"></i>　<span id="feature">feature</span></div>
             <div class="detail"><i class="fa fa-bullhorn"></i>　近況<span class="recentDay">#天前</span></div>
           </div>
           <div class="col-md-6">
-            <div class="underLine detail"><i class="fa fa-user"></i>　洪良凱</div>
-            <div class="underLine detail"><i class="fa fa-location-arrow"></i>　種植地</div>
-            <div class="detail"><i class="fa fa-calendar"></i>　預定販售日</div>
+            <div class="underLine detail"><i class="fa fa-user"></i>　<span id="farmerName">洪良凱</span></div>
+            <div class="underLine detail"><i class="fa fa-location-arrow"></i>　<span id="place">種植地</span></div>
+            <div class="detail"><i class="fa fa-calendar"></i>　<span id="sellingTime">預定販售日</span></div>
           </div>
         </div>
 			
     	<div class="col-md-12">　</div>
+
+      <div id="diary"></div>
     	
-      
-      <div id="new-diary-area" class="row">
-        <form class="col-md-2">
-          <div class="form-group">
-            <label class="sr-only" for="latest_change">近況</label>
-            <input id="latest_change" type="text" class="form-control" placeholder="輸入近況..." required>
-          </div>
-          <div class="form-group">
-            <label class="sr-only" for="change_date">更新日期</label>
-            <input id="change_date" type="date" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <a class="btn btn-danger" id="change_cancel">取消</a>
-            <button type="submit" class="btn btn-success">確認</button>
-          </div>
-        </form>
-        <div class="col-md-10">
-          <label>近況照片</label><br>
-          <button id="latest_change_pic" class="btn btn-default"><i class="fa fa-plus"></i></button>
-        </div>
-      </div>
-    	
-      <div class="row diary">
+      <!-- <div class="row diary">
     		<div class="col-md-2">
     			<h3>近況2</h3>
     			<p>日期</p>
@@ -88,7 +76,7 @@
     		<div class="col-md-7">
     			<img src="pictures.jpg">
     		</div>
-    	</div>
+    	</div> -->
     </section>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
