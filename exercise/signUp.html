@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>小農故事</title>
+    <link rel="stylesheet" type="text/css" href="farmer_story.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  	<script src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+  </head>
+  <body class="container">
+  	<script type="text/javascript">
+  		function checkPasswordMatch() {
+		    var password = $("#pwd").val();
+		    var confirmPassword = $("#pwd-cnfm").val();
+
+		    if (password != confirmPassword)
+		        $("#divCheckPasswordMatch").text("Passwords do not match!");
+		    else
+		        $("#divCheckPasswordMatch").text("Passwords match.");
+		}
+  		$(document).ready(function () {
+			$("#pwd-cnfm").keyup(checkPasswordMatch);
+			$("#agree").click(function() {
+				if($("#agree").prop("checked")){
+			    	$('#signUpSubmit').prop("disabled", false);
+				} else {
+			    	$('#signUpSubmit').prop("disabled", true);          
+				}
+			});
+		});
+  		$(document).on('submit','#signUpForm',function(e){
+	        e.preventDefault();  // 避免 form submit 完成後 轉址
+	        var user = new Parse.User();
+	        user.set("username", $('#username').val());
+	        user.set("email",    $('#email').val());
+	        user.set("password", $('#pwd').val());
+	        // username ,email , passwod 一定都要有
+	        user.set("userShowName", $('#realname').val());
+
+	        user.signUp(null,{
+	          success : function(user){     // 註冊成功後會執行的 callback
+	            console.log(user);
+	            alert("使用者註冊成功");
+	          },
+	          error : function(user,error){ // 註冊失敗後會執行的 callback
+	            console.log(error) ;
+	            alert(error.message);
+	          }
+	        });//endof signUp
+	      /* 結束*/
+	    });  //endof signUpBtn onSubmit
+  	</script>
+  	<nav class="navbar navbar-inverse">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+				<a href="index.html" class="navbar-brand"><span class="glyphicon glyphicon-leaf"></span> 小農故事</a>
+    		</div>
+    		<div>
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="signUp.html"><span class="glyphicon glyphicon-user"></span> 註冊</a></li>
+            		<li><a href="logIn.html"><span class="glyphicon glyphicon-log-in"></span> 登入</a></li>
+      			</ul>
+    		</div>
+  		</div>
+	</nav>
+	<h2>註冊</h2>
+	<form role="form" class="form-horizontal" id="signUpForm">
+		<div class="form-group">
+			<label class="control-label col-md-2">使用者名稱：</label>
+			<div class="col-md-9">
+				<input type="text" class="form-control" id="username" pattern="[A-Za-z0-9]{6,}" placeholder="至少6字元(不含特殊符號如：!@、#、$、%、&、*、_、-、+...等)" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">密碼：</label>
+			<div class="col-md-9">
+				<input type="password" class="form-control" id="pwd" pattern=".{6,}" placeholder="至少6字元" onchange="checkPasswordMatch();" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">確認密碼：</label>
+			<div class="col-md-9">
+				<input type="password" class="form-control" id="pwd-cnfm" pattern=".{6,}" placeholder="至少6字元" required>
+				<span id="divCheckPasswordMatch"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">真實姓名：</label>
+			<div class="col-md-9">
+				<input type="text" class="form-control" id="realname" placeholder="王大明" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">e-mail：</label>
+			<div class="col-md-9">
+				<input type="email" class="form-control" id="email" placeholder="必須是要真實存在的信箱，認證且聯絡用。" required>
+			</div>
+		</div>
+		<hr/>
+		<!-- <div class="form-group">
+			<label class="control-label col-md-2">上傳大頭貼：</label>
+			<div class="col-md-9">
+				<input type="file" id="personalPicInput">
+			</div>
+		</div> -->
+		<div class="form-group">
+			<label class="control-label col-md-offset-2">
+				<input type="checkbox" id="agree"> 我同意"OOXX"
+			</label>
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary col-md-offset-2" id="signUpSubmit" disabled>註冊</button>
+			<a class="btn" href="logIn.html">前往登入</a>
+		</div>
+	</form>
+  </body>
+</html>

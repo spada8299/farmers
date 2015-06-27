@@ -12,27 +12,7 @@
   </head>
   <body class="container">
     <script type="text/javascript">
-      $(document).ready(function(){
-        var currentUser = Parse.User.current();
-        if (currentUser) {
-          console.log(currentUser);
-          // do stuff with the user
-          $('#navUsername').text(currentUser.attributes.userShowName);
-          getUserCropCard(currentUser.attributes.userShowName);
-        } else {
-          // show the signup or login page
-          alert("您尚未登入，即將前往登入頁面。");
-          window.location = "logIn.html";
-          return null;
-        }
-        $('#logOut').on('click',function(){
-          // log out.
-          console.log("Logout clicked");
-          Parse.User.logOut();
-          window.location = "index.html";
-          return null;
-        });
-      });
+      getAllCropCard();
     </script>
   	
   	<nav class="navbar navbar-inverse">
@@ -42,15 +22,8 @@
     		</div>
     		<div>
       		<ul class="nav navbar-nav navbar-right">
-        		<li class="dropdown">
-          		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i> <span id="navUsername">洪良凱</span><span class="caret"></span></a>
-          		<ul class="dropdown-menu">
-                <li><a href="farmerStory_farmer.html">我的生產履歷</a></li>
-                <li><a href="#">我的頁面</a></li>
-            		<li><a href="#">設定</a></li>
-            		<li><a id="logOut">登出</a></li>
-          		</ul>
-        		</li>
+        		<li><a href="signUp.html"><span class="glyphicon glyphicon-user"></span> 註冊</a></li>
+            <li><a href="logIn.html"><span class="glyphicon glyphicon-log-in"></span> 登入</a></li>
       		</ul>
     		</div>
   		</div>
@@ -59,33 +32,31 @@
 		<section>
 			<div>
   			<ul class="nav nav-pills col-md-10">
-    			<li class="active"><a data-toggle="pill" href="#home">我的生產履歷</a></li>
+    			<li class="active"><a data-toggle="pill" href="#home">生產履歷總覽</a></li>
     			<li><a data-toggle="pill" href="#menu1">未上市</a></li>
     			<li><a data-toggle="pill" href="#menu2">已上市</a></li>
     			<li><a data-toggle="pill" href="#menu3">已售完</a></li>
   			</ul>
-        <div class="col-md-2">
-          <a href="farmerStory_farmer_newResumeForm.html" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-plus"></span>　新履歷</a>
-        </div>
+        
 
   			<div class="tab-content">
-    			<div id="home" class="tab-pane fade in active">
-      			<!-- <a href="farmerStory_farmer_resume_1.html" class="infoLink col-md-6">
+          <div id="home" class="tab-pane fade in active">
+            <!-- <a href="farmerStory_farmer_resume_forUser_1.html" class="infoLink col-md-6">
               <div class="cropInfo">
                 <div class="col-md-4">
-      				    <div class="tag notOnS">未上市</div>
-      				    <div class="pic"><img src=""></div>
-      				    <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 10</span><span id="trackNum"><i class="fa fa-rss"></i> 3</span></div>
+                  <div class="tag notOnS">未上市</div>
+                  <div class="pic"><img src=""></div>
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 10</span><span id="trackNum"><i class="fa fa-rss"></i> 3</span></div>
                 </div>
                 <div class="col-md-7">
-      				    <div class="cropTitle"><b>菜名#1</b></div>
-      				    <div class="underLine detail"><i class="fa fa-clock-o"></i>　播種時間</div>
-      				    <div class="underLine detail"><i class="fa fa-certificate"></i>　feature</div>
-      				    <div class="detail"><i class="fa fa-bullhorn"></i>　近況<span class="recentDay">#天前</span></div>
+                  <div class="cropTitle"><b>菜名#1</b></div>
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　播種時間</div>
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　feature</div>
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　近況<span class="recentDay">#天前</span></div>
                 </div>
-      		    </div>
+              </div>
             </a>
-      			<a href="" class="infoLink col-md-6">
+            <a href="" class="infoLink col-md-6">
               <div class="cropInfo">
                 <div class="col-md-4">
                   <div class="tag nowOnSale">已上市</div>
@@ -115,9 +86,9 @@
                 </div>
               </div>
             </a> -->
-    			</div>
-    			<div id="menu1" class="tab-pane fade">
-              <!-- <a href="farmerStory_farmer_resume_1.html" class="infoLink col-md-6">
+          </div>
+          <div id="menu1" class="tab-pane fade">
+              <!-- <a href="farmerStory_farmer_resume_forUser_1.html" class="infoLink col-md-6">
               <div class="cropInfo">
                 <div class="col-md-4">
                   <div class="tag notOnS">未上市</div>
@@ -134,8 +105,8 @@
             </a>
             <div class="col-md-6">
             </div> -->
-    			</div>
-    			<div id="menu2" class="tab-pane fade">
+          </div>
+          <div id="menu2" class="tab-pane fade">
               <!-- <a href="" class="infoLink col-md-6">
               <div class="cropInfo">
                 <div class="col-md-4">
@@ -151,8 +122,8 @@
                 </div>
               </div>
             </a> -->
-    			</div>
-    			<div id="menu3" class="tab-pane fade">
+          </div>
+          <div id="menu3" class="tab-pane fade">
               <!-- <a href="" class="infoLink col-md-6">
               <div class="cropInfo">
                 <div class="col-md-4">
@@ -170,8 +141,8 @@
             </a>
             <div class="col-md-6">
             </div> -->
-    			</div>
-  			</div>
+          </div>
+        </div>
 			</div>
 		</section>
   </body>
