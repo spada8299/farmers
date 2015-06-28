@@ -38,20 +38,20 @@
           window.location = 'farmerStory_farmer_resume_edit.html?id=' + key;
         });
 
-        $('#test').click(function(){
-          var arrayLen = parseInt($('#diaryNum').text());
-          var recentTitleAry = new Array();
-          var recentDateAry = new Array();
-          var recentImgAry = new Array();
-          for(var i=0; i<arrayLen; i++){
-            recentTitleAry.unshift($('#recentTitle'+ i).text());
-            recentDateAry.unshift($('#recentDate'+ i).text());
-            recentImgAry.unshift($('#recentImage'+ i).attr("src"));
-          }
-          console.log(recentTitleAry);
-          console.log(recentDateAry);
-          console.log(recentImgAry);
-        });
+        // $('#test').click(function(){
+        //   var arrayLen = parseInt($('#diaryNum').text());
+        //   var recentTitleAry = new Array();
+        //   var recentDateAry = new Array();
+        //   var recentImgAry = new Array();
+        //   for(var i=0; i<arrayLen; i++){
+        //     recentTitleAry.unshift($('#recentTitle'+ i).text());
+        //     recentDateAry.unshift($('#recentDate'+ i).text());
+        //     recentImgAry.unshift($('#recentImage'+ i).attr("src"));
+        //   }
+        //   console.log(recentTitleAry);
+        //   console.log(recentDateAry);
+        //   console.log(recentImgAry);
+        // });
         
         
         
@@ -84,6 +84,7 @@
 
           newCrop.save(null, {
             success: function(crop){
+              $('#newID').text(crop.id);
               recentTitleAry.unshift($('#latest_change').val());
               recentDateAry.unshift($('#change_date').val());
               recentImgAry.unshift($('#photoUrl').val());
@@ -91,6 +92,8 @@
               newCrop.set("recentDate", recentDateAry);
               newCrop.set("recentImage", recentImgAry);
               newCrop.save();
+              alert('新增日記成功!');
+              window.location = 'farmerStory_farmer_resume_1.html?id=' + $('#newID').text();
             }
           });
           var oldCrop = Parse.Object.extend("crop");
@@ -100,8 +103,9 @@
               old.destroy({});
             }
           });
-          alert('新增日記成功!');
-          window.location = 'farmerStory_farmer.html';
+          
+          // alert('新增日記成功!');
+          // window.location = 'farmerStory_farmer_resume_1.html?id=' + $('#newID').text();
           return null;
         });
       });
@@ -270,6 +274,7 @@
         </form>
       </div>
       <h3>目前日記數：<span id="diaryNum"></span></h3>
+      <span id="newID"></span>
       <!-- <button id="test">test</button> -->
 
       <div id="diary">
