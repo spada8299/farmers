@@ -33,10 +33,10 @@
           window.location = "index.html";
           return null;
         });
-        $('#editBtn').on('click', function(){
-          var key = getValue("id");
-          window.location = 'farmerStory_farmer_resume_edit.html?id=' + key;
-        });
+        // $('#editBtn').on('click', function(){
+        //   var key = getValue("id");
+        //   window.location = 'farmerStory_farmer_resume_edit.html?id=' + key;
+        // });
 
         // $('#test').click(function(){
         //   var arrayLen = parseInt($('#diaryNum').text());
@@ -53,7 +53,51 @@
         //   console.log(recentImgAry);
         // });
         
-        
+        $(document).on('submit', '#statusForm', function(e){
+          e.preventDefault();
+          var arrayLen = parseInt($('#diaryNum').text());
+          var recentTitleAry = new Array();
+          var recentDateAry = new Array();
+          var recentImgAry = new Array();
+          for(var i=0; i<arrayLen; i++){
+            recentTitleAry.push($('#recentTitle'+ i).text());
+            recentDateAry.push($('#recentDate'+ i).text());
+            recentImgAry.push($('#recentImage'+ i).attr("src"));
+          }
+
+          var NewCrop = Parse.Object.extend("crop");
+          var newCrop = new NewCrop();
+
+          newCrop.set("cropStatus", $('#cropStatus').text());
+          newCrop.set("cropName", $('#cropTitle').text());
+          newCrop.set("cropImageUrl", $('#cropPic').attr("src"));
+          newCrop.set("farmerName", $('#farmerName').text());
+          newCrop.set("feature", $('#feature').text());
+          newCrop.set("seedingPosition", $('#place').text());
+          newCrop.set("seedingTime", $('#seedingTime').text());
+          newCrop.set("sellingTime", $('#sellingTime').text());
+          newCrop.set("recentTitle", recentTitleAry);
+          newCrop.set("recentDate", recentDateAry);
+          newCrop.set("recentImage", recentImgAry);
+
+          newCrop.save(null, {
+            success: function(crop){
+              $('#newID').text(crop.id);
+              newCrop.set("cropStatus", $('#changeStatus').val());
+              newCrop.save();
+              alert('更改狀態成功!');
+              window.location = 'farmerStory_farmer_resume_1.html?id=' + $('#newID').text();
+            }
+          });
+          var oldCrop = Parse.Object.extend("crop");
+          var query = new Parse.Query(oldCrop);
+          query.get(getValue("id"), {
+            success: function(old){
+              old.destroy({});
+            }
+          });
+          return null;
+        });
         
         $(document).on('submit', '#newDiaryForm', function(e){
           e.preventDefault();
@@ -137,11 +181,27 @@
           <div ><img src="" id="cropPic" class="picBig"></div>
         </div>
         <div class="col-md-10 resumeInfo">
-          <div class="col-md-10">
+          <div class="col-md-7">
             <span class="cropTitle" id="cropTitle">菜名#1</span><span id="bookMarkNum"><i class="fa fa-star"></i> 0人加書籤</span><span id="trackNum"><i class="fa fa-rss"></i> 0人訂閱</span>
           </div>
-          <div class="col-md-2">
-            <a class="btn btn-danger btn-lg" role="button" id="editBtn"><span class="glyphicon glyphicon-pencil"></span>　編輯</a>
+          <div class="col-md-3 col-md-offset-2">
+            <button class="btn btn-danger btn-lg" role="button" id="editBtn"><span class="glyphicon glyphicon-pencil"></span>　變更販售狀態</button>
+          </div>
+          <div class="col-md-5" id="editStatusArea">
+            <form class="form-inline" id="statusForm">
+              <div class="form-group">
+                <label for="changeStatus">販售狀態：</label>
+                <select class="form-control" id="changeStatus" required>
+                  <option value="未上市" id="notOnSale">未上市</option>
+                  <option value="已上市" id="nowOnSale">已上市</option>
+                  <option value="已售完" id="soldOut">已售完</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-success">確認</button>
+                <a class="btn btn-danger" id="edit_cancel">取消</a>
+              </div>
+            </form>
           </div>
           <div class="col-md-6">
             <div class="underLine detail"><i class="fa fa-clock-o"></i>　<span id="seedingTime">播種時間</span></div>
@@ -314,7 +374,20 @@
             $('#new-diary-area').hide();
             $('#new-diary').fadeIn('slow');
           });
-        })
+        });
+        $('#editStatusArea').hide();
+        $('#editBtn').on('click', function(){
+          $('#editBtn').fadeOut('fast', function(){
+            $('#editBtn').hide();
+            $('#editStatusArea').fadeIn('fast');
+          });
+        });
+        $('#edit_cancel').on('click', function(){
+          $('#editStatusArea').fadeOut('fast', function(){
+            $('#editStatusArea').hide();
+            $('#editBtn').fadeIn('fast');
+          });
+        });
       });
     </script>
   </body>
