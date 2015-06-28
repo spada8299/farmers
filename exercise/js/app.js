@@ -81,10 +81,20 @@ var getAllCropCard = function(){
 	var query = new Parse.Query(Crop);
 	query.get(id, {
 		success: function(crop){
+			$('#diaryNum').text(crop.get("recentDate").length);
+			$('#cropStatus').text(crop.get("cropStatus"));
+			if(crop.get("cropStatus")==="未上市"){
+				$('#cropStatus').addClass("notOnS");
+			} else if(crop.get("cropStatus")==="已上市"){
+				$('#cropStatus').addClass("nowOnSale");
+			} else {
+				$('#cropStatus').addClass("soldOut");
+			}
 			$('#navCropTitle').text(crop.get("cropName"));
 			$('#cropPic').attr("src", crop.get("cropImageUrl"));
 			$('#cropTitle').text(crop.get("cropName"));
 			$('#seedingTime').text(crop.get("seedingTime"));
+			$('#recent').text(crop.get("recentTitle")[0]);
 			$('#feature').text(crop.get("feature"));
 			$('#farmerName').text(crop.get("farmerName"));
 			$('#place').text(crop.get("seedingPosition"));
@@ -92,11 +102,11 @@ var getAllCropCard = function(){
 			for(var i=0; i<crop.get("recentDate").length; i++){
 				$('#diary').append('<div class="row diary">\
     		<div class="col-md-2">\
-    			<h3>'+ crop.get("recentTitle")[i] +'</h3>\
-    			<p>'+ crop.get("recentDate")[i] +'</p>\
+    			<h3 id="recentTitle'+ i +'">'+ crop.get("recentTitle")[i] +'</h3>\
+    			<p id="recentDate'+ i +'">'+ crop.get("recentDate")[i] +'</p>\
     		</div>\
     		<div class="col-md-7">\
-    			<img src="'+ crop.get("recentImage")[i] +'" class="picBig">\
+    			<img src="'+ crop.get("recentImage")[i] +'" class="picBig" id="recentImage'+ i +'">\
     		</div>\
     	</div>');
 			}

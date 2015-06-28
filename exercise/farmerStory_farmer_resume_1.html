@@ -12,6 +12,8 @@
   </head>
   <body　class="container">
     <script type="text/javascript">
+      console.log(getValue("id"));
+      getCrop(getValue("id"));
       $(document).ready(function(){
         var currentUser = Parse.User.current();
         if (currentUser) {
@@ -31,8 +33,77 @@
           window.location = "index.html";
           return null;
         });
-        console.log(getValue("id"));
-        getCrop(getValue("id"));
+        $('#editBtn').on('click', function(){
+          var key = getValue("id");
+          window.location = 'farmerStory_farmer_resume_edit.html?id=' + key;
+        });
+
+        $('#test').click(function(){
+          var arrayLen = parseInt($('#diaryNum').text());
+          var recentTitleAry = new Array();
+          var recentDateAry = new Array();
+          var recentImgAry = new Array();
+          for(var i=0; i<arrayLen; i++){
+            recentTitleAry.unshift($('#recentTitle'+ i).text());
+            recentDateAry.unshift($('#recentDate'+ i).text());
+            recentImgAry.unshift($('#recentImage'+ i).attr("src"));
+          }
+          console.log(recentTitleAry);
+          console.log(recentDateAry);
+          console.log(recentImgAry);
+        });
+        
+        
+        
+        $(document).on('submit', '#newDiaryForm', function(e){
+          e.preventDefault();
+          var arrayLen = parseInt($('#diaryNum').text());
+          var recentTitleAry = new Array();
+          var recentDateAry = new Array();
+          var recentImgAry = new Array();
+          for(var i=0; i<arrayLen; i++){
+            recentTitleAry.push($('#recentTitle'+ i).text());
+            recentDateAry.push($('#recentDate'+ i).text());
+            recentImgAry.push($('#recentImage'+ i).attr("src"));
+          }
+
+          var NewCrop = Parse.Object.extend("crop");
+          var newCrop = new NewCrop();
+
+          newCrop.set("cropStatus", $('#cropStatus').text());
+          newCrop.set("cropName", $('#cropTitle').text());
+          newCrop.set("cropImageUrl", $('#cropPic').attr("src"));
+          newCrop.set("farmerName", $('#farmerName').text());
+          newCrop.set("feature", $('#feature').text());
+          newCrop.set("seedingPosition", $('#place').text());
+          newCrop.set("seedingTime", $('#seedingTime').text());
+          newCrop.set("sellingTime", $('#sellingTime').text());
+          newCrop.set("recentTitle", recentTitleAry);
+          newCrop.set("recentDate", recentDateAry);
+          newCrop.set("recentImage", recentImgAry);
+
+          newCrop.save(null, {
+            success: function(crop){
+              recentTitleAry.unshift($('#latest_change').val());
+              recentDateAry.unshift($('#change_date').val());
+              recentImgAry.unshift($('#photoUrl').val());
+              newCrop.set("recentTitle", recentTitleAry);
+              newCrop.set("recentDate", recentDateAry);
+              newCrop.set("recentImage", recentImgAry);
+              newCrop.save();
+            }
+          });
+          var oldCrop = Parse.Object.extend("crop");
+          var query = new Parse.Query(oldCrop);
+          query.get(getValue("id"), {
+            success: function(old){
+              old.destroy({});
+            }
+          });
+          alert('新增日記成功!');
+          window.location = 'farmerStory_farmer.html';
+          return null;
+        });
       });
     </script>
   	<nav class="navbar navbar-inverse">
@@ -58,7 +129,7 @@
 		</nav>
 		<section>
         <div class="col-md-2">
-          <div class="tag notOnS">未上市</div>
+          <div class="tag" id="cropStatus">未上市</div>
           <div ><img src="" id="cropPic" class="picBig"></div>
         </div>
         <div class="col-md-10 resumeInfo">
@@ -66,12 +137,12 @@
             <span class="cropTitle" id="cropTitle">菜名#1</span><span id="bookMarkNum"><i class="fa fa-star"></i> 0人加書籤</span><span id="trackNum"><i class="fa fa-rss"></i> 0人訂閱</span>
           </div>
           <div class="col-md-2">
-            <a href="#" class="btn btn-danger btn-lg" role="button"><span class="glyphicon glyphicon-pencil"></span>　編輯</a>
+            <a class="btn btn-danger btn-lg" role="button" id="editBtn"><span class="glyphicon glyphicon-pencil"></span>　編輯</a>
           </div>
           <div class="col-md-6">
             <div class="underLine detail"><i class="fa fa-clock-o"></i>　<span id="seedingTime">播種時間</span></div>
             <div class="underLine detail"><i class="fa fa-certificate"></i>　<span id="feature">feature</span></div>
-            <div class="detail"><i class="fa fa-bullhorn"></i>　近況<span class="recentDay">#天前</span></div>
+            <div class="detail"><i class="fa fa-bullhorn"></i>　<span id="recent">近況</span><span class="recentDay">#天前</span></div>
           </div>
           <div class="col-md-6">
             <div class="underLine detail"><i class="fa fa-user"></i>　<span id="farmerName">洪良凱</span></div>
@@ -84,7 +155,8 @@
     	<button id="new-diary" class="btn btn-default btn-lg btn-block">新增日記</button>
       
       <div id="new-diary-area" class="row">
-        <form class="col-md-2">
+        <form id="newDiaryForm">
+          <div class="col-md-2">
           <div class="form-group">
             <label class="sr-only" for="latest_change">近況</label>
             <input id="latest_change" type="text" class="form-control" placeholder="輸入近況..." required>
@@ -97,12 +169,109 @@
             <a class="btn btn-danger" id="change_cancel">取消</a>
             <button type="submit" class="btn btn-success">確認</button>
           </div>
-        </form>
-        <div class="col-md-10">
+          </div>
+          <div class="col-md-10">
           <label>近況照片</label><br>
-          <button id="latest_change_pic" class="btn btn-default"><i class="fa fa-plus"></i></button>
+          <!-- <button id="latest_change_pic" class="btn btn-default"><i class="fa fa-plus"></i></button>
+          <label for="new-photo">作物相片</label><br> -->
+      <input type="text" id="photoUrl" required></input>
+      <!--<button id="new-photo-btn" class="btn btn-default"><i class="fa fa-plus"></i></button>-->
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+      <fieldset>
+        <input type="file" name="fileselect" id="fileselect"></input>
+        <output id="list"></output>
+        <button id="uploadbutton" type="button" class="btn btn-default">上傳照片</button>
+        <p>請先點選上傳照片，確定照片上傳後，再填寫左邊的表單。</p>
+        <p>全部填寫完後，點選確認即可。</p>
+      </fieldset>
+    </form>
+
+      <style>
+      .thumb {
+        height: 150px;
+        border: 1px;
+        margin: 10px 5px 0 0;
+        }
+        </style>
+
+      <script>
+
+      function handleFileSelect(evt) {
+      var files = evt.target.files; // FileList object
+
+      for (var i=0,f; f=files[i]; i++) {
+        if (!f.type.match('image.*')) {
+          continue;
+        }
+
+        var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          document.getElementById('list').insertBefore(span, null);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  }
+  document.getElementById('fileselect').addEventListener('change', handleFileSelect, false);
+  </script>
+
+ <script type="text/javascript">
+      $(function() {
+        var file;
+
+        // Set an event listener on the Choose File field.
+        $('#fileselect').bind("change", function(e) {
+          var files = e.target.files || e.dataTransfer.files;
+          // Our file var now holds the selected file
+          file = files[0];
+        });
+
+        // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
+        $('#uploadbutton').click(function() {
+          var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+
+          $.ajax({
+            type: "POST",
+            beforeSend: function(request) {
+              request.setRequestHeader("X-Parse-Application-Id", 'lb68hfMRYgqhmuro8Ook5xux5mORCjF59w6Exfek');
+              request.setRequestHeader("X-Parse-REST-API-Key", 'iOGF3JgHMKhnSzRLM2XGRNaGwanahbzv7pAAlqjQ');
+              request.setRequestHeader("Content-Type", file.type);
+            },
+            url: serverUrl,
+            data: file,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+              alert("上傳成功");
+              document.getElementById('photoUrl').value = data.url;
+              // document.getElementById('new-photo-btn').style.backgroundImage = "url('data.url')";
+            },
+            error: function(data) {
+              var obj = jQuery.parseJSON(data);
+              alert(obj.error);
+            }
+          });
+        });
+      });
+    </script>
         </div>
+        </form>
       </div>
+      <h3>目前日記數：<span id="diaryNum"></span></h3>
+      <!-- <button id="test">test</button> -->
+
       <div id="diary">
       </div>
     	

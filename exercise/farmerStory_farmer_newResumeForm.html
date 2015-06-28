@@ -40,6 +40,7 @@
           var Crop = Parse.Object.extend("crop");
           var crop = new Crop();
 
+          crop.set("cropStatus", 1);
           crop.set("cropName",document.getElementById('crop').value);
           crop.set("farmerName",currentUser.attributes.userShowName);
           crop.set("feature",document.getElementById('feature').value);
@@ -92,20 +93,61 @@
     </nav>
     
     <div class="col-md-4 col-md-offset-1">
-      <label for="new-photo">作物相片</label><br>
-      <input type="text" id="photoUrl"  required></input>
-      <button id="new-photo-btn" class="btn btn-default"><i class="fa fa-plus"></i></button>
+            <label for="new-photo">作物相片</label><br>
+      <input type="text" id="photoUrl" required></input>
+      <!--<button id="new-photo-btn" class="btn btn-default"><i class="fa fa-plus"></i></button>-->
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
     <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
       <fieldset>
         <input type="file" name="fileselect" id="fileselect"></input>
-        <input id="uploadbutton" type="button" value="Upload to Parse"/>
+        <output id="list"></output>
+        <button id="uploadbutton" type="button" class="btn btn-default">上傳照片</button>
+        <p>請先點選上傳照片，確定照片上傳後，再填寫右邊的表單。</p>
+        <p>全部填寫完後，點選送出即可。</p>
       </fieldset>
     </form>
 
-    <script type="text/javascript">
+      <style>
+      .thumb {
+        height: 150px;
+        border: 1px;
+        margin: 10px 5px 0 0;
+        }
+        </style>
+
+      <script>
+
+      function handleFileSelect(evt) {
+      var files = evt.target.files; // FileList object
+
+      for (var i=0,f; f=files[i]; i++) {
+        if (!f.type.match('image.*')) {
+          continue;
+        }
+
+        var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          document.getElementById('list').insertBefore(span, null);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  }
+  document.getElementById('fileselect').addEventListener('change', handleFileSelect, false);
+  </script>
+
+ <script type="text/javascript">
       $(function() {
         var file;
 
@@ -132,7 +174,7 @@
             processData: false,
             contentType: false,
             success: function(data) {
-              alert("File available at: " + data.url);
+              alert("上傳成功");
               document.getElementById('photoUrl').value = data.url;
               // document.getElementById('new-photo-btn').style.backgroundImage = "url('data.url')";
             },
