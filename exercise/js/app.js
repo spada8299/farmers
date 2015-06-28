@@ -7,7 +7,8 @@ var getAllCropCard = function(){
 		success: function(Crops){
 			console.log(Crops);
 			for(var i=0; i<Crops.length; i++){
-				$('#home').append('<a href="farmerStory_farmer_resume_forUser_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+				if(Crops[i].get('cropStatus')==="未上市"){
+					$('#home').append('<a href="farmerStory_farmer_resume_forUser_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
               <div class="cropInfo">\
                 <div class="col-md-4">\
                   <div class="tag notOnS">未上市</div>\
@@ -18,10 +19,88 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　近況<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get("recentTitle")[0] +'<span class="recentDay">#天前</span></div>\
                 </div>\
               </div>\
             </a>');
+					$('#menu1').append('<a href="farmerStory_farmer_resume_forUser_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag notOnS">未上市</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+				} else if(Crops[i].get('cropStatus')==="已上市"){
+					$('#home').append('<a href="farmerStory_farmer_resume_forUser_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag nowOnSale">已上市</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+					$('#menu2').append('<a href="farmerStory_farmer_resume_forUser_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag nowOnSale">已上市</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+				} else {
+					$('#home').append('<a href="farmerStory_farmer_resume_forUser_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag soldOut">已售完</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+					$('#menu3').append('<a href="farmerStory_farmer_resume_forUser_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag soldOut">已售完</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+				}
 			}
 		},
 		error: function(error){
@@ -36,7 +115,8 @@ var getAllCropCard = function(){
 		success: function(Crops){
 			console.log(Crops);
 			for(var i=0; i<Crops.length; i++){
-				$('#home').append('<a href="farmerStory_farmer_resume_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+				if(Crops[i].get('cropStatus')==="未上市"){
+					$('#home').append('<a href="farmerStory_farmer_resume_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
               <div class="cropInfo">\
                 <div class="col-md-4">\
                   <div class="tag notOnS">未上市</div>\
@@ -47,10 +127,88 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　近況<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
                 </div>\
               </div>\
             </a>');
+					$('#menu1').append('<a href="farmerStory_farmer_resume_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag notOnS">未上市</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+				} else if(Crops[i].get('cropStatus')==="已上市"){
+					$('#home').append('<a href="farmerStory_farmer_resume_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag nowOnSale">已上市</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+					$('#menu2').append('<a href="farmerStory_farmer_resume_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag nowOnSale">已上市</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+				} else {
+					$('#home').append('<a href="farmerStory_farmer_resume_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag soldOut">已售完</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+					$('#menu3').append('<a href="farmerStory_farmer_resume_1.html?id='+ Crops[i].id +'" class="infoLink col-md-6">\
+              <div class="cropInfo">\
+                <div class="col-md-4">\
+                  <div class="tag soldOut">已售完</div>\
+                  <div><img src="'+ Crops[i].get('cropImageUrl') +'" class="pic"></div>\
+                  <div class="underPic"><span id="bookMarkNum"><i class="fa fa-star"></i> 0</span><span id="trackNum"><i class="fa fa-rss"></i> 0</span></div>\
+                </div>\
+                <div class="col-md-7">\
+                  <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
+                  <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
+                  <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                </div>\
+              </div>\
+            </a>');
+				}
 			}
 		},
 		error: function(error){
