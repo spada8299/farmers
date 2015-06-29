@@ -1,6 +1,7 @@
 Parse.initialize("lb68hfMRYgqhmuro8Ook5xux5mORCjF59w6Exfek", "PAQaaFUhvx52GXTHFsZ4MeLF2aaQNrJT1xx6je2S");
 
 var getAllCropCard = function(){
+  var today = new Date();
 	var Crop = Parse.Object.extend("crop");
 	var crop = new Parse.Query(Crop);
 	crop.find({
@@ -19,7 +20,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get("recentTitle")[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get("recentTitle")[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -34,7 +35,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -50,7 +51,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -65,7 +66,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -81,7 +82,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -96,7 +97,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -108,6 +109,7 @@ var getAllCropCard = function(){
 		}
 	});
 }, getUserCropCard = function(username){
+  var today = new Date();
 	var Crop = Parse.Object.extend("crop");
 	var query = new Parse.Query(Crop);
 	query.equalTo("farmerName", username);
@@ -127,7 +129,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -142,7 +144,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -158,7 +160,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -173,7 +175,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -189,7 +191,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -204,7 +206,7 @@ var getAllCropCard = function(){
                   <div class="cropTitle"><b>'+ Crops[i].get('cropName') +'</b></div>\
                   <div class="underLine detail"><i class="fa fa-clock-o"></i>　'+ Crops[i].get('seedingTime') +'</div>\
                   <div class="underLine detail"><i class="fa fa-certificate"></i>　'+ Crops[i].get('feature') +'</div>\
-                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">#天前</span></div>\
+                  <div class="detail"><i class="fa fa-bullhorn"></i>　'+ Crops[i].get('recentTitle')[0] +'<span class="recentDay">'+ formatFloat(daydiff(Crops[i].createdAt, today), 0) +'天前</span></div>\
                 </div>\
               </div>\
             </a>');
@@ -235,6 +237,7 @@ var getAllCropCard = function(){
  value.replace(/\+/g," ");
  return value;
 }, getCrop = function(id){
+  var today = new Date();
 	var Crop = Parse.Object.extend("crop");
 	var query = new Parse.Query(Crop);
 	query.get(id, {
@@ -268,11 +271,17 @@ var getAllCropCard = function(){
     		</div>\
     	</div>');
 			}
+      $('.recentDay').text(formatFloat(daydiff(crop.createdAt, today), 0) +'天前');
 		},
 		error: function(object, error){
 			alert("Error: " + error.code + " " + error.message);
 		}
 	});
+}, daydiff = function(first, second){
+  return (second-first)/(1000*60*60*24);
+}, formatFloat = function(num, pos){
+  var size = Math.pow(10, pos);
+  return Math.round(num * size) / size;
 };
 
 // var Crop = Parse.Object.extend("crop");
